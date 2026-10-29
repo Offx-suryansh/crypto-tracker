@@ -55,3 +55,6 @@ Official guide: https://docs.github.com/en/pages/getting-started-with-github-pag
 ## Disclaimer
 
 This is a portfolio/demo project for informational use, not financial advice. Crypto markets are volatile. Currency calculations are approximate reference conversions and may differ from bank, card, or money-transfer rates.
+
+
+This project is licensed under the MIT License — see the LICENSE file for details.
