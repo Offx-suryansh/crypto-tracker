@@ -1,0 +1,143 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#090d16">
+  <meta name="description" content="A clean crypto market tracker and currency converter with live available market data.">
+  <title>Orbit — Crypto & Currency</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar">
+      <a class="brand" href="#" aria-label="Orbit home">
+        <span class="brand-mark"><span></span><span></span><span></span></span>
+        <span>orbit<span class="brand-dot">.</span></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="side-nav">
+        <a href="#markets" class="nav-item active"><span class="nav-icon">◈</span> Crypto markets</a>
+        <a href="#converter" class="nav-item"><span class="nav-icon">⇄</span> Currency converter</a>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="status-dot"></div>
+        <div><strong>Public market data</strong><small>No account required</small></div>
+      </div>
+    </aside>
+
+    <main class="main-content">
+      <header class="topbar">
+        <div class="mobile-brand"><span class="brand-mark"><span></span><span></span><span></span></span> orbit<span class="brand-dot">.</span></div>
+        <div class="breadcrumb">Workspace <span>/</span> Overview</div>
+        <div class="topbar-right">
+          <span class="live-pill"><i></i> MARKET DATA</span>
+          <button class="icon-button" id="refreshAll" title="Refresh data" aria-label="Refresh data">↻</button>
+        </div>
+      </header>
+
+      <section class="welcome-row">
+        <div>
+          <p class="eyebrow">YOUR FINANCIAL SNAPSHOT</p>
+          <h1>Markets at a <span>glance.</span></h1>
+          <p class="subtitle">Crypto market insights and simple currency conversions, all in one place.</p>
+        </div>
+        <div class="updated-card"><span class="pulse"></span><div><small>Last checked</small><strong id="lastUpdated">Loading…</strong></div></div>
+      </section>
+
+      <section class="stats-grid" aria-label="Market overview">
+        <article class="stat-card">
+          <div class="stat-top"><span>Top 50 market cap total</span><span class="stat-icon purple">◈</span></div>
+          <div class="stat-value" id="totalMarketCap">—</div>
+          <div class="stat-foot"><span id="marketCapChange" class="change neutral">—</span><span>24h change</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>24h trading volume</span><span class="stat-icon blue">⌁</span></div>
+          <div class="stat-value" id="totalVolume">—</div>
+          <div class="stat-foot"><span class="muted">Across tracked markets</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Bitcoin price</span><span class="stat-icon orange">₿</span></div>
+          <div class="stat-value" id="btcPrice">—</div>
+          <div class="stat-foot"><span id="btcChange" class="change neutral">—</span><span>24h change</span></div>
+        </article>
+        <article class="stat-card">
+          <div class="stat-top"><span>Tracked assets</span><span class="stat-icon green">✦</span></div>
+          <div class="stat-value" id="assetCount">—</div>
+          <div class="stat-foot"><span class="muted">Top market listings</span></div>
+        </article>
+      </section>
+
+      <section class="content-grid" id="markets">
+        <article class="panel market-panel">
+          <div class="panel-heading">
+            <div><p class="eyebrow">EXPLORE</p><h2>Crypto markets</h2></div>
+            <span class="data-tag"><i></i> CoinGecko</span>
+          </div>
+          <div class="market-controls">
+            <label class="search-box"><span>⌕</span><input id="coinSearch" type="search" placeholder="Search coins…" autocomplete="off"></label>
+            <select id="currencySelect" aria-label="Display prices in currency">
+              <option value="usd">USD ($)</option><option value="inr">INR (₹)</option><option value="eur">EUR (€)</option><option value="gbp">GBP (£)</option>
+            </select>
+          </div>
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>Asset</th><th>Price</th><th>24h</th><th>Market cap</th><th class="chart-heading">7d trend</th></tr></thead>
+              <tbody id="coinRows"><tr><td colspan="5" class="loading-cell"><span class="spinner"></span> Fetching market data…</td></tr></tbody>
+            </table>
+          </div>
+          <div class="table-footer"><span id="coinStatus">Loading market listings…</span><span>Auto-refreshes about every 2 minutes</span></div>
+        </article>
+
+        <aside class="panel movers-panel">
+          <div class="panel-heading"><div><p class="eyebrow">MARKET PULSE</p><h2>Top movers</h2></div><span class="sparkle">✦</span></div>
+          <p class="panel-description">Biggest moves among the tracked coins over the last 24 hours.</p>
+          <div id="moversList" class="movers-list"><div class="loading-inline"><span class="spinner"></span> Loading movers…</div></div>
+          <div class="movers-note">Price movements can change quickly. This is market information, not financial advice.</div>
+        </aside>
+      </section>
+
+      <section class="panel converter-panel" id="converter">
+        <div class="converter-intro">
+          <p class="eyebrow">QUICK CALCULATION</p>
+          <h2>Currency converter<span>.</span></h2>
+          <p>Convert between global currencies using the latest available reference rates.</p>
+          <div class="rate-source"><span class="source-check">✓</span><span>Daily reference rates from Frankfurter</span></div>
+          <div id="rateUpdated" class="rate-updated">Loading exchange rates…</div>
+        </div>
+        <div class="converter-widget">
+          <div class="conversion-field">
+            <label for="fromAmount">You send</label>
+            <div class="amount-row"><input id="fromAmount" type="number" min="0" step="any" value="100" inputmode="decimal"><select id="fromCurrency" aria-label="From currency"></select></div>
+            <div class="field-caption" id="fromCaption">100 US Dollar</div>
+          </div>
+          <div class="swap-row"><span class="rate-summary" id="rateSummary">Loading rate…</span><button id="swapCurrencies" class="swap-button" aria-label="Swap currencies" title="Swap currencies">⇅</button></div>
+          <div class="conversion-field output-field">
+            <label for="toAmount">They receive (approx.)</label>
+            <div class="amount-row"><input id="toAmount" type="text" readonly value="—" aria-label="Converted amount"><select id="toCurrency" aria-label="To currency"></select></div>
+            <div class="field-caption" id="toCaption">—</div>
+          </div>
+          <button class="convert-button" id="convertButton">Update conversion <span>↗</span></button>
+          <p class="converter-disclaimer">Rates are indicative reference rates and may differ from the rates offered by banks, cards, or exchange services. Not for trading or settlement.</p>
+        </div>
+      </section>
+
+      <footer class="footer">
+        <div class="footer-brand"><span>© <span id="year"></span> Orbit Markets</span><span class="footer-credit">Made by <strong>Suryansh Sharma</strong> <span class="footer-star">✦</span></span></div>
+        <div class="creator-links" aria-label="Creator links">
+          <a class="creator-link" href="mailto:sharmasuryansh159@gmail.com" aria-label="Contact Suryansh by email" title="Contact by email"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3.5 5.5h17v13h-17z"/><path d="m4 6 8 7 8-7"/></svg><span>Contact</span></a>
+          <a class="creator-link icon-only" href="https://github.com/Offx-suryansh" target="_blank" rel="noopener noreferrer" aria-label="GitHub profile" title="GitHub"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 19c-4.3 1.3-4.3-2.2-6-2.5M15 21v-3.5a3 3 0 0 0-.8-2.3c2.7-.3 5.5-1.3 5.5-6A4.7 4.7 0 0 0 18.5 6a4.3 4.3 0 0 0-.1-3S17.4 2.7 15 4.3a13 13 0 0 0-6 0C6.6 2.7 5.6 3 5.6 3a4.3 4.3 0 0 0-.1 3 4.7 4.7 0 0 0-1.2 3.2c0 4.7 2.8 5.7 5.5 6A3 3 0 0 0 9 17.5V21"/></svg><span class="sr-only">GitHub</span></a>
+          <a class="creator-link icon-only" href="https://www.linkedin.com/in/offxsuryansh/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn profile" title="LinkedIn"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 9v10M5 5.5v.1M10 19v-6a4 4 0 0 1 8 0v6M10 9v10"/><circle cx="5" cy="5" r="1"/></svg><span class="sr-only">LinkedIn</span></a>
+          <a class="creator-link portfolio-link" href="https://suryanshsharma.runs-at.dev/" target="_blank" rel="noopener noreferrer">More about creator <span aria-hidden="true">↗</span></a>
+        </div>
+        <div class="footer-sources"><span>Crypto data: <a href="https://www.coingecko.com/en/api" target="_blank" rel="noopener noreferrer">CoinGecko</a></span><span>FX rates: <a href="https://www.frankfurter.dev/" target="_blank" rel="noopener noreferrer">Frankfurter</a></span></div>
+      </footer>
+    </main>
+  </div>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+  <script src="app.js"></script>
+</body>
+</html>
